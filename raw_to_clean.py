@@ -1,3 +1,19 @@
+"""
+Creates adjacency matrix and edgelists from raw.json.
+
+Outputs:
+--------
+* A.py: adjacency matrix
+* clean.json: out-edge list
+* clean_in.json: in-edge list
+
+Cleans the raw package info from raw.json,
+stripping away any version-specific info.
+Maps the clean package name to its raw name,
+and creates a clean out-edge list.
+Creates the adjacency matrix.
+Creates a clean in-edge list.
+"""
 import json
 
 import numpy as np
@@ -75,3 +91,14 @@ np.save('Data/A.npy', A)
 for k, v in out.items():
     if len(v) != len(set(v)):
         print(k, v)
+
+clean_in = {}
+for pkg in pkgs['Name']:
+    clean_in[pkg] = []
+
+for k, v in clean.items():
+    for val in v:
+        clean_in[val].append(k)
+
+with open('Data/clean_in.json', 'w') as f:
+    json.dump(clean_in, f)
