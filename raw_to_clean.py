@@ -73,6 +73,9 @@ for c in clean:
         l.append(e.split()[0])
     out[c] = l
 
+for k, v in out.items():
+    out[k] = list(set(v))
+
 with open('Data/clean.json', 'w') as f:
     json.dump(out, f)
 
@@ -96,7 +99,7 @@ clean_in = {}
 for pkg in pkgs['Name']:
     clean_in[pkg] = []
 
-for k, v in clean.items():
+for k, v in out.items():
     for val in v:
         clean_in[val].append(k)
 
