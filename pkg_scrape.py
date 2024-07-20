@@ -1,3 +1,11 @@
+"""
+Scrapes package dependencies from /info/index.json
+
+Each conda package has an index.json file, in which
+the "depends" entry contains that package's dependencies.
+These are aggregated for all packages, 
+and stored as Data/raw.json.
+"""
 import json
 import os
 from pathlib import Path
