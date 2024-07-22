@@ -173,18 +173,51 @@ for pkg in sphinx:
     for dep in clean[pkg]:
         G.add_edge(pkg, dep)
 
-random.seed(12345)
-np.random.seed(12345)
+random.seed(54321)
+np.random.seed(54321)
 pos = nx.spring_layout(G, k=0.5)
 node_pos = nudge(pos, 0, 0.05)
 
-# manually adjust some labels
-node_pos['sphinxcontrib-htmlhelp'] = (0.625, 0.13)
-node_pos['sphinxcontrib-applehelp'] = (0.45, 0.357)
+edges = G.edges()
+node_colors = ['b' if n[:6] == 'sphinx' else 'gray' for n in G.nodes()]
+colors = ['b' if (e[0][:6] == 'sphinx' and e[1][:6] == 'sphinx') 
+          else 'gray' for e in edges]
+widths = [2 if color == 'b' else 0.5 for color in colors]
+
 
 fig, ax = plt.subplots(figsize=(20, 20))
-nx.draw_networkx(G, pos, ax=ax, with_labels=False)
+nx.draw_networkx(G, pos, ax=ax, with_labels=False,
+                 node_color=node_colors,
+                 edge_color=colors,
+                 width=widths)
 nx.draw_networkx_labels(G, node_pos, ax=ax,
                         font_size=22)
 fig.tight_layout()
+sns.despine(fig, left=True, bottom=True)
+fig.savefig('Images/sphinx.png', transparent=True)
+
+# %%
+# jupyter
+jup = pkgs[pkgs['Name'].str[:7].eq('jupyter')]['Name'].to_list()
+
+for pkg in jup:
+    for dep in clean[pkg]:
+        G.add_edge(pkg, dep)
+random.seed(12345)
+np.random.seed(12345)
+G.remove_node('python')
+pos = nx.spring_layout(G, k=0.9)
+node_pos = nudge(pos, 0, 0.05)
+fig, ax = plt.subplots(figsize=(20, 20))
+node_colors = ['darkorange' if n[:7] == 'jupyter' 
+               else 'gray' for n in G.nodes()]
+edges = G.edges()
+colors = ['darkorange' if (e[0][:7] == 'jupyter' and e[1][:7] == 'jupyter') 
+          else 'gray' for e in edges]
+widths = [2 if color == 'darkorange' else 0.5 for color in colors]
+nx.draw_networkx(G, pos, ax=ax, with_labels=False,
+                 node_color=node_colors,
+                 edge_color=colors,
+                 width=widths)
+nx.draw_networkx_labels(G, node_pos)
 sns.despine(fig, left=True, bottom=True)
