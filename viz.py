@@ -215,9 +215,14 @@ edges = G.edges()
 colors = ['darkorange' if (e[0][:7] == 'jupyter' and e[1][:7] == 'jupyter') 
           else 'gray' for e in edges]
 widths = [2 if color == 'darkorange' else 0.5 for color in colors]
+in_degrees = G.in_degree()
+node_size = np.asarray([in_degrees[n] for n in G.nodes()])
 nx.draw_networkx(G, pos, ax=ax, with_labels=False,
                  node_color=node_colors,
+                 node_size=node_size*100 + 100,
                  edge_color=colors,
                  width=widths)
-nx.draw_networkx_labels(G, node_pos)
+nx.draw_networkx_labels(G, node_pos, font_size=22)
 sns.despine(fig, left=True, bottom=True)
+fig.tight_layout()
+fig.savefig('Images/jupyter.png', transparent=True)
