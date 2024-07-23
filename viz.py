@@ -1,3 +1,6 @@
+"""
+Visualization of the network and several subgraphs.
+"""
 # %%
 import json
 import random
