@@ -47,7 +47,7 @@ dist(0, 'Out-Degree');
 
 # %%
 # Bullet points for in-degree
-df = summary_df(axis=1)
+df = summary_df(axis=0)
 print(df[df['Vals'].between(0, 8)]['Percent'].sum()) # 0.9613
 
 # highest k-in
@@ -60,7 +60,7 @@ print(df[df['Vals'].between(0, 8)]['Percent'].sum()) # 0.9613
 
 # %%
 # Bullet points for out-degree
-df = summary_df(axis=0)
+df = summary_df(axis=1)
 print(df[df['Vals'].between(0, 11)]['Percent'].sum()) # 0.9511
 
 # %%

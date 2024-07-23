@@ -74,18 +74,17 @@ for c in clean:
     out[c] = l
 
 for k, v in out.items():
-    out[k] = list(set(v))
+    out[k] = sorted(list(set(v)))
 
 with open('Data/clean.json', 'w') as f:
     json.dump(out, f)
 
-# Aij is 1 if there is a dependency of i on j
-# Opposite of Newman book but what networkx expects
+# Adjacency matrix representation
 A = np.zeros((len(clean), len(clean)))
 for k, v in out.items():
-    j = clean.index(k)
+    i = clean.index(k)
     for _ in v:
-        i = clean.index(_)
+        j = clean.index(_)
         A[i, j] = 1
 
 np.save('Data/A.npy', A)
