@@ -129,3 +129,10 @@ for pkg in ['blas', 'ca-certificates', 'icc_rt', 'msys2-conda-epoch',
 # Watts and Strogatz clustering coefficient
 # 0.34, signficantly higher than transitivity
 print(nx.average_clustering(G)) # 0.34
+
+# Betweenness Centrality
+bc = nx.betweenness_centrality(G)
+bc_pkg = {idx_to_pkg(k): v for k, v in bc.items()}
+bc_sorted = dict(sorted(bc_pkg.items(), key=lambda item: item[1]))
+
+# Eigenvector Centrality
