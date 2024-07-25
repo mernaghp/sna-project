@@ -136,3 +136,6 @@ bc_pkg = {idx_to_pkg(k): v for k, v in bc.items()}
 bc_sorted = dict(sorted(bc_pkg.items(), key=lambda item: item[1]))
 
 # Eigenvector Centrality
+ec = nx.eigenvector_centrality(G)
+ec_pkg = {idx_to_pkg(k): v for k, v in ec.items()}
+ec_sorted = dict(sorted(ec_pkg.items(), key=lambda item: item[1]))
